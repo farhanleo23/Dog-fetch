@@ -5,28 +5,16 @@ const form = document.querySelector('form');
 const randomDog = "https://dog.ceo/api/breeds/image/random";
 
 
-// ------------------------------------------
-//  FETCH FUNCTIONS
-// ------------------------------------------
 
 fetch(randomDog)
     .then(response => response.json())
-    .then(data => console.log(data.message))
-
-// ------------------------------------------
-//  HELPER FUNCTIONS
-// ------------------------------------------
+    .then(data => generateImage(data.message) )
 
 
-
-// ------------------------------------------
-//  EVENT LISTENERS
-// ------------------------------------------
-
-
-
-// ------------------------------------------
-//  POST DATA
-// ------------------------------------------
-
-
+function generateImage(data){
+    const html = `
+        <img src="${data}" alt = >
+        <p>Click to view image ${select.value}</p>
+    `;
+    card.innerHTML = html;
+}
