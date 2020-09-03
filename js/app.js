@@ -6,12 +6,15 @@ const randomDog = "https://dog.ceo/api/breeds/image/random";
 const breedList = "https://dog.ceo/api/breeds/list";
 
 
+async function fetchData(url){
+    const res = await fetch(url);
+    return await res.json();
+}
+
 fetch(breedList)
-.then(response => response.json())
 .then(data => generateOptions(data.message))
 
 fetch(randomDog)
-    .then(response => response.json())
     .then(data => generateImage(data.message) )
 
 
