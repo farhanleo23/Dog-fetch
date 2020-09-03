@@ -6,15 +6,15 @@ const randomDog = "https://dog.ceo/api/breeds/image/random";
 const breedList = "https://dog.ceo/api/breeds/list";
 
 
-async function fetchData(url){
-    const res = await fetch(url);
-    return await res.json();
+function fetchData(url){
+    return fetch(url)
+            .then(res => res.json())
 }
 
-fetch(breedList)
+fetchData(breedList)
 .then(data => generateOptions(data.message))
 
-fetch(randomDog)
+fetchData(randomDog)
     .then(data => generateImage(data.message) )
 
 
@@ -31,3 +31,19 @@ function generateImage(data){
     `;
     card.innerHTML = html;
 }
+
+function fetchBreedImage(){
+    const breed = select.value;
+    const img = card.querySelector('img');
+    const p = card.querySelector('p');
+
+    fetchData(`https://dog.ceo/api/breed/${breed}/images/random`)
+        .then(data => {
+            img.src = data.message;
+            img.alt = breed;
+            p.textContent = `Click to view more ${breed}s`;
+        })
+}
+
+select.addEventListener('change', fetchBreedImage);
+card.addEventListener('click', fetchBreedImage);
