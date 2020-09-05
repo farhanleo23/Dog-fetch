@@ -5,7 +5,7 @@ const form = document.querySelector('form');
 const randomDog = "https://dog.ceo/api/breeds/image/random";
 const breedList = "https://dog.ceo/api/breeds/list";
 
-
+//main function for fetching data
 function fetchData(url){
     return fetch(url)
             .then(res => res.json())
