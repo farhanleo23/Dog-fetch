@@ -10,16 +10,21 @@ function fetchData(url){
     return fetch(url)
             .then(checkStatus)
             .then(res => res.json())
-            .catch(error => {
-                console.log("error occured", error)
-            })
+            .catch(error =>  console.log("error occured", error))
 }
 
-fetchData(breedList)
-.then(data => generateOptions(data.message))
 
-fetchData(randomDog)
-    .then(data => generateImage(data.message) )
+Promise.all([
+    fetchData(breedList),
+    fetchData(randomDog)
+])
+.then(data => {
+    const breedList = data[0].message;
+    const randomDog = data[1].message;
+
+    generateOptions(breedList);
+    generateImage(randomDog);
+})
 
 
 function checkStatus(response){
@@ -27,9 +32,8 @@ function checkStatus(response){
         return Promise.resolve(response);
     } else {
         return Promise.reject(new Error(response.statusText));
-        )
     }
-}
+    }
 
 
 function generateOptions(data){
