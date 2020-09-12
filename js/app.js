@@ -8,7 +8,11 @@ const breedList = "https://dog.ceo/api/breeds/list";
 //main function for fetching data
 function fetchData(url){
     return fetch(url)
+            .then(checkStatus)
             .then(res => res.json())
+            .catch(error => {
+                console.log("error occured", error)
+            })
 }
 
 fetchData(breedList)
@@ -16,6 +20,16 @@ fetchData(breedList)
 
 fetchData(randomDog)
     .then(data => generateImage(data.message) )
+
+
+function checkStatus(response){
+    if (response.ok) {
+        return Promise.resolve(response);
+    } else {
+        return Promise.reject(new Error(response.statusText));
+        )
+    }
+}
 
 
 function generateOptions(data){
